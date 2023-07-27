@@ -20,8 +20,8 @@ def yes_no(question):
                   "")
 
 
-# Ask user if they want to see the instructions
-want_instructions = yes_no("Do you want to read the instructions?")
+# Ask user if they would like to read the instructions before they play
+want_instructions = yes_no("Would you like to read the instructions? ")
 
 if want_instructions == "yes":
     print("To play Hangman, you must guess one letter at a time. "
@@ -35,6 +35,20 @@ print()
 name = input("Please enter your name: ")
 
 
+# easy = random word from words_list with letters (<5)
+# medium = random word from words_list with letters (>5, <8)
+# medium = random word from words_list with letters (>10)
+
+
+difficulty = input("What difficulty would you like, " + name + "? Easy, medium, or hard? ")
+if difficulty == "easy":
+    word = easy
+if difficulty == "medium":
+    word = medium
+if difficulty == "hard":
+    word = hard
+
+
 # hangman begins
 def get_word():
     word = random.choice(word_list)
@@ -46,19 +60,19 @@ def play(word):
     guessed = False
     guessed_letters = []
     guessed_words = []
-    tries = 7
+    attempts = 7
     print("Let's play Hangman, "+name+"!")
-    print(display_hangman(tries))
+    print(display_hangman(attempts))
     print(word_completion)
     print("\n")
-    while not guessed and tries > 0:
+    while not guessed and attempts > 0:
         guess = input("Please guess a letter or word: ").upper()
         if len(guess) == 1 and guess.isalpha():
             if guess in guessed_letters:
-                print("You already guessed the letter", guess)
+                print("You have already guessed this letter", guess)
             elif guess not in word:
                 print(guess, "is not in the word.")
-                tries -= 1
+                attempts -= 1
                 guessed_letters.append(guess)
             else:
                 print("Good job,", guess, "is in the word!")
@@ -75,24 +89,24 @@ def play(word):
                 print("You already guessed the word", guess)
             elif guess != word:
                 print(guess, "is not the word.")
-                tries -= 1
+                attempts -= 1
                 guessed_words.append(guess)
             else:
                 guessed = True
                 word_completion = word
         else:
             print("Not a valid guess.")
-        print(display_hangman(tries))
+        print(display_hangman(attempts))
         print(word_completion)
         print("\n")
     if guessed:
         print("Congratulations on finding the word, you win!3")
     else:
-        print("Sorry, you ran out of tries. The word was " + word + ". Maybe next time!")
+        print("Sorry, you ran out of attemps. The word was " + word + ". Maybe next time!")
 
 
-def display_hangman(tries):
-    stages = [    # hanged
+def display_hangman(attempts):
+    stages = [  # hanged
         """
            --------^
            |       |
@@ -100,7 +114,7 @@ def display_hangman(tries):
           /|\      |
           / \      |
                    |
-            -------o
+            _______o
         """,
         # head body both arms and a leg hanging
         """
@@ -110,7 +124,7 @@ def display_hangman(tries):
           /|\      |
           /        |
                    |
-            -------o
+            _______o
         """,
         # head body and both arms hanging
 
@@ -121,7 +135,7 @@ def display_hangman(tries):
           /|\      |
                    |
                    |
-            -------o
+            _______o
         """,
         # head body and an arm hanging
 
@@ -132,7 +146,7 @@ def display_hangman(tries):
            |\      |
                    |
                    |
-            -------o
+            _______o
         """,
         # head and body hanging
         """                
@@ -142,7 +156,7 @@ def display_hangman(tries):
            |       |
                    |
                    |
-            -------o
+            _______o
         """,
         # head hanging
         """                      
@@ -152,7 +166,7 @@ def display_hangman(tries):
                    |
                    |
                    |
-            -------o
+            _______o
         """,
         # rope hanging
         """
@@ -162,7 +176,7 @@ def display_hangman(tries):
                    |
                    |
                    |
-            -------o
+            _______o
         """,
         # empty state
 
@@ -173,11 +187,11 @@ def display_hangman(tries):
                    |
                    |
                    |
-            -------o            
+            _______o
         """
 
     ]
-    return stages[tries]
+    return stages[attempts]
 
 
 def main():
@@ -190,3 +204,39 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+import random
+easy = random.randint (1,20)
+medium = random.randint (1,50)
+hard = random.randint (1,100)
+
+guessesTaken = 0
+my_name = input("Hello, What is your name? ")
+difficulty = input("Well, "+ my_name + ". What dificulty would you like ? easy medium or hard? ")
+if difficulty == "easy":
+    number = easy
+    print ("Okay, " + my_name + ". I am thinking of a number between 1 and 20")
+if difficulty == "medium":
+    number = medium
+    print ("Okay, " + my_name + ". I am thinking of a number between 1 and 50")
+if difficulty == "hard":
+    number = hard
+
+    print ("Okay, " + my_name + ". I am thinking of a number between 1 and 100")
+
+
+while guessesTaken < 6:
+    guess = int(input('Take a guess. '))
+    guessesTaken = guessesTaken + 1
+    if guess < number:
+        print('Your guess is too low.')
+    if guess > number:
+        print('Your guess is too high.')
+    if guess == number:
+        break
+if guess == number:
+    guessesTaken = str (guessesTaken)
+    print('Good job, ' + my_name + '! You guessed my number in ' + guessesTaken + ' guesses!')
+if guess != number:
+    number = str (number)
+    print('Nope. The number I was thinking of was ' + number)
