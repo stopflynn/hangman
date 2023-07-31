@@ -1,5 +1,5 @@
-def display_hangman(tries):
-    stages = [    # hanged
+def display_hangman(attempts):
+    stages = [  # hanged
         """
            --------^
            |       |
@@ -7,9 +7,10 @@ def display_hangman(tries):
           /|\      |
           / \      |
                    |
-            -------o
+            _______o
         """,
         # head body both arms and a leg hanging
+
         """
            --------^
            |       |
@@ -17,7 +18,7 @@ def display_hangman(tries):
           /|\      |
           /        |
                    |
-            -------o
+            _______o
         """,
         # head body and both arms hanging
 
@@ -28,7 +29,7 @@ def display_hangman(tries):
           /|\      |
                    |
                    |
-            -------o
+            _______o
         """,
         # head body and an arm hanging
 
@@ -39,7 +40,7 @@ def display_hangman(tries):
            |\      |
                    |
                    |
-            -------o
+            _______o
         """,
         # head and body hanging
         """                
@@ -49,7 +50,7 @@ def display_hangman(tries):
            |       |
                    |
                    |
-            -------o
+            _______o
         """,
         # head hanging
         """                      
@@ -59,7 +60,7 @@ def display_hangman(tries):
                    |
                    |
                    |
-            -------o
+            _______o
         """,
         # rope hanging
         """
@@ -69,7 +70,7 @@ def display_hangman(tries):
                    |
                    |
                    |
-            -------o
+            _______o
         """,
         # empty state
 
@@ -80,8 +81,8 @@ def display_hangman(tries):
                    |
                    |
                    |
-            -------o            
+            _______o
         """
 
     ]
-    return stages[tries]
+    return stages[attempts]
