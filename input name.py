@@ -13,10 +13,9 @@ def get_word(wording):
 
 
 print()
-
-name = input("Please enter your name: ")
+name = input("\033[0;37;10m Please enter your name:\033[0;37;10m \n")
 print()
-difficulty = input("What difficulty would you like, " + name + "? Easy, medium, or hard? ")
+difficulty = input("What difficulty would you like, " + name + "? Easy, medium, or hard?")
 if difficulty == "easy":
     words = easy_list
 elif difficulty == "medium":
