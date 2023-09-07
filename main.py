@@ -3,7 +3,7 @@ from easy import easy_list
 from medium import medium_list
 from hard import hard_list
 
-# checks user has enters yes / no to a question
+# checks user has enters yes / no to a question, can be used throughout for multiple purposes
 
 
 def yes_no(question):
@@ -21,7 +21,7 @@ def yes_no(question):
             print("Please enter yes or no"
                   "")
 
-# select a difficulty
+# gets users to select a difficulty
 
 
 def levels(question):
@@ -41,7 +41,7 @@ def levels(question):
             print(error)
 
 
-# game begins
+# game begins, loop starts
 
 
 def get_word(wording):
@@ -49,7 +49,7 @@ def get_word(wording):
     return difficulty.upper()
 
 
-def play(word, name):
+def play(word, name, wins):
     word_completion = "_" * len(word)
     guessed = False
     guessed_letters = []
@@ -58,18 +58,21 @@ def play(word, name):
     print("Let's play Hang-person, "+name+"!")
     print(display_hangman(attempts))
     print(word_completion)
-    print("\n")
     while not guessed and attempts > 0:
+        # forces players to input a letter or a word
         guess = input("Please guess a letter or word: ").upper()
         if len(guess) == 1 and guess.isalpha():
             if guess in guessed_letters:
-                print("You have already guessed the letter", guess)
+                # tells players that they've already put in that letter, and they need to choose another. No lives lost.
+                print("\033[1;31;10m You have already guessed the letter", guess)
             elif guess not in word:
-                print("\033[1;31;10m", guess, "is not in the word.")
+                # tells players that their guess is not in the word. They lose a life
+                print(f"\033[1;31;10m {guess} is not in the word.")
                 attempts -= 1
                 guessed_letters.append(guess)
             else:
-                print("\033[1;32;10m Good job,", guess, "is in the word! You have", attempts, " attempts left. \n")
+                # tells users their guessed letter is in the word and lives remain the same
+                print(f"\033[1;32;10m Good job, {guess} is in the word! \n")
                 guessed_letters.append(guess)
                 word_as_list = list(word_completion)
                 indices = [i for i, letter in enumerate(word) if letter == guess]
@@ -80,24 +83,29 @@ def play(word, name):
                     guessed = True
         elif len(guess) == len(word) and guess.isalpha():
             if guess in guessed_words:
-                print("You already guessed the word", guess)
+                # tells players that they've already put in that word, and they need to choose another. No lives lost.
+                print("\033[1;31;10m You already guessed the word", guess)
             elif guess != word:
-                print("\033[1;31;10m", guess, "is not the word.", display_hangman(attempts))
+                # tells players that their guess is not the word. They lose a life
+                print(f"\033[1;31;10m {guess} is not the word.", display_hangman(attempts))
                 attempts -= 1
                 guessed_words.append(guess)
             else:
                 guessed = True
                 word_completion = word
         else:
-            print("Not a valid guess.")
+            print("\033[1;31;10m Not a valid guess.")
         print(display_hangman(attempts))
         print(word_completion)
-        print("You've guessed:", guessed_letters, guessed_words, ". You have", attempts, "lives left.")
+        # tells players which letters and words they've guessed as well as how many lives they have per attempt
+        print(f"You've guessed: {guessed_letters, guessed_words} You have, {attempts} lives left")
         print("\n")
     if guessed:
-        print("Congratulations on finding the word, you win!")
+        wins += 1
+        print("\033[1;32;10m Congratulations on finding the word, you win!")
+        return wins
     else:
-        print("Sorry, you ran out of lives. The word was " + word + ". Better luck next time!")
+        print(f"\033[1;31;10m Sorry, you ran out of lives. The word was {word}. Better luck next time!")
 
 
 # images
@@ -194,24 +202,26 @@ def display_hangman(attempts):
 
 
 def main():
+    # wins
+    wins = 0
     print("Welcome to Hang-person, it's like Hangman but more inclusive.")
     name = input("Please enter your name: ")
-    play_again = "Y" or "y" or "yes"
-    while play_again == "Y" or "y" or "yes":
+    play_again = "yes"
+    while play_again == "yes":
 
         difficulty = levels("What difficulty would you like, " + name + "? Easy (e), medium (m), or hard (h)? ")
         # Ask user if they would like to read the instructions before they play
-        want_instructions = yes_no("Would you like to read the instructions? (Y/N)")
+        want_instructions = yes_no("Would you like to read the instructions? (Yes/No) ")
         if want_instructions == "yes":
             print("To play Hang-person, you must guess one letter at a time. "
                   "If the letter is correct, it will enter one ore more of the blank spaces, ")
             print("which will help you to find the word. "
-                  "You have seven lives, so if guess wrong seven times, you will lose and the man will be hanged. ")
+                  "You have seven lives, so if guess wrong seven times, you will lose and the person will be hanged. ")
             print("As each difficulty progresses, the words get longer but your number of lives remain the same.")
         word = get_word(difficulty)
-        play(word, name)
-        play_again = input("Do you want to play again? (Y/N)")
-    print("End of the game")
+        games_1 = play(word, name, wins)
+        play_again = yes_no("Do you want to play again? (Yes/No)")
+    print(f"End of the game. You won {games_1} games.")
 
 
 if __name__ == "__main__":
