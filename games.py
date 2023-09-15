@@ -55,8 +55,9 @@ def play(word, name):
     guessed_letters = []
     guessed_words = []
     attempts = 7
-    print(word)
+
     print("Let's play Hang-person, "+name+"!")
+    print(word)
     print(display_hangman(attempts))
     print(word_completion)
     while not guessed and attempts > 0:
@@ -102,7 +103,9 @@ def play(word, name):
         print(f"You've guessed: {guessed_letters, guessed_words} You have, {attempts} lives left")
         print("\n")
     if guessed:
+        #wins.append(1)
         print("\033[1;32;10m Congratulations on finding the word, you win!")
+        #return wins
     else:
         print(f"\033[1;31;10m Sorry, you ran out of lives. The word was {word}. Better luck next time!")
 
@@ -201,6 +204,7 @@ def display_hangman(attempts):
 
 
 def main():
+    #wins = []
     print("Welcome to Hang-person, it's like Hangman but more inclusive.")
     name = input("Please enter your name: ")
     play_again = "yes"
@@ -216,8 +220,9 @@ def main():
                   "You have seven lives, so if guess wrong seven times, you will lose and the person will be hanged. ")
             print("As each difficulty progresses, the words get longer but your number of lives remain the same.")
         word = get_word(difficulty)
-        play(word, name)
+        games_1 = play(word, name)
         play_again = yes_no("Do you want to play again? (Yes/No)")
+    print(f"End of the game. You won {games_1} game/s.")
 
 
 if __name__ == "__main__":

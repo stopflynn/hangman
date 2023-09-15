@@ -11,10 +11,10 @@ def yes_no(question):
     while True:
         response = input(question).lower()
 
-        if response == "yes" or response == "y":
+        if response == "yes":
             return "yes"
 
-        elif response == "no" or response == "n":
+        elif response == "no":
             return "no"
 
         else:
@@ -29,11 +29,11 @@ def levels(question):
     while True:
         response = input(question).lower()
 
-        if response == "easy" or response == "e":
+        if response == "easy":
             return easy_list
-        elif response == "medium" or response == "m":
+        elif response == "medium":
             return medium_list
-        elif response == "hard" or response == "h":
+        elif response == "hard":
             return hard_list
         else:
             print(error)
@@ -88,98 +88,98 @@ def play(word, name):
             print("Not a valid guess.")
         print(display_hangman(attempts))
         print(word_completion)
-        print("You've guessed:", guessed_letters, guessed_words, ". You have", attempts, "lives left.")
+        print("You've guessed:", guessed_letters, guessed_words, ". You have", attempts, "attempts left.")
         print("\n")
     if guessed:
         print("Congratulations on finding the word, you win!")
     else:
-        print("Sorry, you ran out of lives. The word was " + word + ". Maybe next time!")
+        print("Sorry, you ran out of attempts. The word was " + word + ". Maybe next time!")
 
 
 def display_hangman(attempts):
     stages = [  # hanged
         """
-           --------^
+           ---------
            |       |
-          x_x      |
+           0       |
           /|\      |
           / \      |
                    |
-            _______o
+            _______^
         """,
         # head body both arms and a leg hanging
 
         """
-           --------^
+           ---------
            |       |
            0       |
           /|\      |
           /        |
                    |
-            _______o
+            _______^
         """,
         # head body and both arms hanging
 
         """
-           --------^
+           ---------
            |       |
            0       |
           /|\      |
                    |
                    |
-            _______o
+            _______^
         """,
         # head body and an arm hanging
 
         """
-           --------^
+           ---------
            |       |
            0       |
            |\      |
                    |
                    |
-            _______o
+            _______^
         """,
         # head and body hanging
         """                
-           --------^
+           ---------
            |       |
            0       |
            |       |
                    |
                    |
-            _______o
+            _______^
         """,
         # head hanging
         """                      
-           --------^
+           ---------
            |       |
            0       |
                    |
                    |
                    |
-            _______o
+            _______^
         """,
         # rope hanging
         """
-           --------^
+           ---------
            |       |
                    |
                    |
                    |
                    |
-            _______o
+            _______^
         """,
         # empty state
 
         """ 
-           --------^
+           ---------
                    |
                    |
                    |
                    |
                    |
-            _______o
+            _______^
         """
 
     ]
@@ -189,8 +189,8 @@ def display_hangman(attempts):
 def main():
     print("Welcome to Hangman")
     name = input("Please enter your name: ")
-    play_again = "Y" or "y" or "yes"
-    while play_again == "Y" or "y" or "yes":
+    play_again = "yes"
+    while play_again == "yes":
 
         difficulty = levels("What difficulty would you like, " + name + "? Easy (e), medium (m), or hard (h)? ")
         # Ask user if they would like to read the instructions before they play
