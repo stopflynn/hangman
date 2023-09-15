@@ -99,7 +99,8 @@ def play(word, name):
         print(display_hangman(attempts))
         print(word_completion)
         # tells players which letters and words they've guessed as well as how many lives they have per attempt
-        print(f"You've guessed: {guessed_letters, guessed_words} You have, {attempts} lives left")
+        print(f"You've guessed: {*guessed_letters, *guessed_words} You have, {attempts} lives left")
+
         print("\n")
     if guessed:
         print("\033[1;32;10m Congratulations on finding the word, you win!")
